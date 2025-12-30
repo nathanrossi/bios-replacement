@@ -1,0 +1,125 @@
+#!/usr/bin/env python3
+import os
+import sys
+import subprocess
+
+def bind_pci_device_to_vfio(pcidev):
+	qemuargs = ["-device", "vfio-pci,host={}".format(pcidev)]
+
+	devicepath = "/sys/bus/pci/devices/{}".format(pcidev)
+	driverpath = "/sys/bus/pci/devices/{}/driver".format(pcidev)
+	if os.path.basename(os.path.realpath(driverpath)) == "vfio-pci":
+		print("PCI device [{}] already binded to vfio".format(pcidev))
+		return qemuargs
+
+	print("PCI device [{}] not binded to vfio".format(pcidev))
+	subprocess.run(["sudo", "sh", "-c",
+		"echo {} > {}".format(pcidev, os.path.join(driverpath, "unbind"))],
+		check = True)
+
+	with open(os.path.join(devicepath, "vendor"), "r") as f:
+		vendorid = int(f.read().strip(), base = 16)
+	with open(os.path.join(devicepath, "device"), "r") as f:
+		deviceid = int(f.read().strip(), base = 16)
+
+	subprocess.run(["sudo", "modprobe", "vfio-pci"])
+
+	subprocess.run(["sudo", "sh", "-c",
+		"echo {:04x} {:04x} > /sys/bus/pci/drivers/vfio-pci/new_id".format(vendorid, deviceid)],
+		check = True)
+
+	return qemuargs
+
+if __name__ == "__main__":
+	machine = "qemux86-64"
+	args = [a for a in sys.argv[1:] if not a.startswith("-")]
+	opts = [a for a in sys.argv[1:] if a.startswith("-")]
+	kernel = None
+	initramfs = None
+	disk = None
+
+	if len(args) > 0:
+		for i in args:
+			if i.startswith("-"):
+				continue
+
+			filename = os.path.basename(i)
+			if any(filename.startswith(n) for n in ["bzImage"]):
+				kernel = i
+			elif filename.endswith(".cpio.gz"):
+				initramfs = i
+			elif filename.endswith(".qcow2"):
+				disk = i
+			else:
+				print("Unknown file: {}".format(i))
+				sys.exit(-1)
+
+	if kernel is None:
+		base = os.getcwd()
+		tmpdir = None
+		for i in ["tmp", "tmp-glibc", "tmp-musl"]:
+			if os.path.exists(os.path.join(base, i)):
+				tmpdir = os.path.join(base, i)
+				break
+
+		if tmpdir is None:
+			print("Run from root of build directory")
+			sys.exit(-1)
+
+		deploydir = os.path.join(tmpdir, "deploy", "images", machine)
+		kernel = kernel or os.path.join(deploydir, "bzImage")
+		# initramfs = initramfs or os.path.join(deploydir, "core-image-minimal-{}.cpio.gz".format(machine))
+
+	print("kernel = {}".format(kernel))
+	print("initramfs = {}".format(initramfs))
+	print("disk = {}".format(disk))
+	if disk is not None and not os.path.exists(disk):
+		subprocess.run(["qemu-img", "create", "-f", "qcow2", "-o", "cluster_size=2M", disk, "128G"], check = True)
+
+	if kernel is None or not os.path.exists(kernel):
+		print("Missing kernel '{}'".format(kernel))
+		sys.exit(-1)
+
+	qemuargs = ["qemu-system-x86_64",
+		"-enable-kvm",
+		"-machine", "type=q35",
+		# "-cpu", "host",
+		"-cpu", "Nehalem,check=false", # Matches J6412 v2 spec
+		"-m", "8G",
+		"-smp", "4",
+		"-nographic",
+		# console
+		# "-monitor", "stdio",
+		"-serial", "mon:stdio",
+		# HWRNG
+		"-object", "rng-random,id=rng0,filename=/dev/urandom", "-device", "virtio-rng-pci,rng=rng0",
+		]
+
+	qemuargs += [
+		# Networking
+		"-netdev", "user,id=wan,net=192.168.32.0/24,dhcpstart=192.168.32.10,hostfwd=tcp::2222-:22",
+		"-device", "e1000,netdev=wan",
+		]
+
+	if disk is not None:
+		qemuargs += [
+			# disk drive
+			"-device", "ahci,id=ahci0",
+			"-device", "ide-hd,drive=disk0,bus=ahci0.0",
+			"-drive", "if=none,id=disk0,cache=none,format=qcow2,aio=threads,file={}".format(disk),
+			]
+
+	qemuargs += [
+		# boot objects
+		"-kernel", kernel,
+		"-append", "console=ttyS0,115200",
+		# "-append", "console=ttyS0,115200 rdinit=/bin/sh",
+		]
+
+	if initramfs is not None:
+		qemuargs += [
+			"-initrd", initramfs,
+		]
+
+	subprocess.run(qemuargs)
+
