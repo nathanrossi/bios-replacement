@@ -1,0 +1,42 @@
+#!/bin/sh
+
+info() {
+    echo "INFO:" $* > /dev/kmsg
+}
+
+error() {
+    echo "ERROR:" $* > /dev/kmsg
+    sleep 3
+
+    reboot -f
+    while true; do
+        sleep 3600
+    done
+}
+
+# initialize /proc, /sys and /run/lock
+mkdir -p /proc /sys /run
+mount -t proc proc /proc
+mount -t sysfs sysfs /sys
+mount -t tmpfs tmpfs /run
+mount -t devtmpfs devtmpfs /dev
+info "mounted"
+
+info "setting hostname 'simpleboot'"
+hostname simpleboot
+
+info "waiting for user input"
+# expect 1 character
+info "Press any key to interrupt boot..."
+read -t 5 -n 1 input
+if [ $? -eq 0 ]; then
+    info "got input"
+else
+    info "timed out"
+fi
+
+info "terminal ttyS0"
+/usr/sbin/getty --autologin root -L 115200 ttyS0
+
+# /bin/sh
+error "failed to boot"
