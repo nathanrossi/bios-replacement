@@ -9,7 +9,6 @@ IMAGE_LINGUAS = " "
 IMAGE_INSTALL = " \
     base-files \
     base-passwd \
-    netbase \
     busybox \
     simpleboot-init \
     ${MACHINE_ESSENTIAL_EXTRA_RDEPENDS} \

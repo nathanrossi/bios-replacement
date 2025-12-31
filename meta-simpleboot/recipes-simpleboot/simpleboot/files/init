@@ -8,6 +8,7 @@ error() {
     echo "ERROR:" $* > /dev/kmsg
     sleep 3
 
+    echo "ERROR: Triggering reboot..." > /dev/kmsg
     reboot -f
     while true; do
         sleep 3600
@@ -36,7 +37,8 @@ else
 fi
 
 info "terminal ttyS0"
-/usr/sbin/getty --autologin root -L 115200 ttyS0
+# setsid needed to get functional tty job control
+/usr/bin/setsid /usr/sbin/getty --autologin root -L 115200 ttyS0
 
 # /bin/sh
 error "failed to boot"

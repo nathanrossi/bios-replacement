@@ -23,5 +23,5 @@ do_install() {
 }
 
 FILES:${PN} += "/init /dev"
-RDEPENDS:${PN} += "kexec-tools"
+RDEPENDS:${PN} += "kexec"
 RDEPENDS:${PN} += "util-linux-agetty"
