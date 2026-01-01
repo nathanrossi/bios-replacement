@@ -158,7 +158,12 @@ python do_generate_config:append:simpleboot () {
     config("PRINTK", "y")
     config("PRINTK_TIME", "y")
     config("LOG_BUF_SHIFT", "18")
+    config("EARLY_PRINTK", "y")
+    # config("EARLYCON", "y")
 
+    config("COMMON_CLK", "y")
+    config("PM", "y")
+    config("PM_CLK", "y")
     config("CPU_FREQ", "y")
     config("CPU_FREQ_STAT", "y")
     config("CPU_FREQ_DEFAULT_GOV_SCHEDUTIL", "y")
@@ -170,10 +175,13 @@ python do_generate_config:append:simpleboot () {
 
     # file systems
     config("PARTITION_ADVANCED", "y")
+    config("MSDOS_PARTITION", "y")
+    config("EFI_PARTITION", "y")
     config("DEVTMPFS", "y")
     config("DEVTMPFS_MOUNT", "y")
     config("SYSFS", "y")
     config("PROC_FS", "y")
+    config("PROC_SYSCTL", "y")
     config("TMPFS", "y")
     config("TMPFS_POSIX_ACL", "y")
     config("BLOCK", "y")
@@ -223,9 +231,12 @@ python do_generate_config:append:simpleboot () {
 
     config("PCI", "y")
     config("PCI_MSI", "y")
+    config("PCI_IOV", "y")
     config("PCIEPORTBUS", "y")
     config("HOTPLUG_PCI", "y")
+    config("PCIE_PME", "y")
 
+    config("BLK_PM", "y")
     config("BLK_DEV", "y")
     config("BLK_DEV_SD", "y")
     config("CHR_DEV_SG", "y")
@@ -233,6 +244,8 @@ python do_generate_config:append:simpleboot () {
     config("SCSI_SPI_ATTRS", "y")
     config("ATA", "y")
     config("SATA_AHCI", "y")
+    config("NVME_CORE", "y")
+    config("BLK_DEV_NVME", "y")
 
     config("USB_SUPPORT", "y")
     config("USB", "y")
@@ -243,8 +256,8 @@ python do_generate_config:append:simpleboot () {
     config("USB_EHCI_HCD", "y")
     config("USB_OHCI_HCD", "y")
     config("USB_UHCI_HCD", "y")
-
     config("USB_STORAGE", "y")
+    config("USB_UAS", "y")
 
     config("RTC_CLASS", "y")
     config("RTC_HCTOSYS", "y")
@@ -261,6 +274,11 @@ python do_generate_config:append:x86-64 () {
     config("DMI", "y")
     config("DMIID", "y")
 
+    config("EFI", "y")
+    config("EFI_ESRT", "y")
+    config("EFI_RUNTIME_WRAPPERS", "y")
+    config("EFI_EARLYCON", "y")
+
     config("RELOCATABLE", "y")
     config("64BIT", "y")
     config("MTRR", "y")
@@ -274,6 +292,7 @@ python do_generate_config:append:x86-64 () {
     config("X86_MCE", "y")
     config("X86_MCE_AMD", "y")
     config("X86_MCE_INTEL", "y")
+    config("X86_PLATFORM_DEVICES", "y")
     config("INTEL_IDLE", "y")
 
     config("KEXEC_FILE", "y")
@@ -295,7 +314,11 @@ python do_generate_config:append:x86-64 () {
     config("SERIAL_8250_SHARE_IRQ", "y")
     config("SERIAL_8250_DETECT_IRQ", "y")
     config("SERIAL_8250_RSA", "y")
-    config("SERIAL_NONSTANDARD", "y")
+    config("SERIAL_8250_PNP", "y")
+    config("SERIAL_8250_PCI", "y")
+    config("SERIAL_8250_PCILIB", "y")
+    config("SERIAL_8250_DW", "y")
+    config("SERIAL_8250_DWLIB", "y")
 
     config("HW_RANDOM_INTEL", "y")
     config("HW_RANDOM_AMD", "y")
