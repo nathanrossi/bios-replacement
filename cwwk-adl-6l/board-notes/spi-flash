@@ -1,0 +1,10 @@
+
+spi_rom flash (bios)
+Winbond 25Q128JVSQ
+https://www.winbond.com/hq/product/code-storage-flash-memory/serial-nor-flash/?__locale=en&partNo=W25Q128JV
+
+nCS - 1 (D)  8 - Vcc (3V)
+ DO - 2      7 - nRESET
+nWP - 3      6 - CLK
+GND - 4      5 - DI
+
