@@ -4,8 +4,8 @@ LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://COPYING;md5=751419260aa954499f7abaabaa882bbe"
 
 SRC_URI = "gitsm://github.com/coreboot/coreboot.git;protocol=https;name=coreboot;branch=main"
-SRCREV_coreboot = "5a0207e56a4dbf599a2268fdc43ca3ab78b3af26"
-PV = "24.05+git+${SRCPV}"
+SRCREV_coreboot = "7edcb87323097f0e6ddd86af9e33a9726261b943"
+PV = "25.12+git+${SRCPV}"
 
 S = "${WORKDIR}/git"
 B = "${WORKDIR}/coreboot-${MACHINE}"
@@ -45,7 +45,13 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 inherit cml1
 KCONFIG_CONFIG_COMMAND = "${EXTRA_OEMAKE} menuconfig"
 
+PLATFORM_BINARY_COMPONENTS = "${THISDIR}/../../../cwwk-adl-6l/ifd-extract"
+
 do_configure() {
+    # Copy image components into workdir
+    cp ${PLATFORM_BINARY_COMPONENTS}/flashregion_0_flashdescriptor.bin ${WORKDIR}/flashregion_0_flashdescriptor.bin
+    cp ${PLATFORM_BINARY_COMPONENTS}/flashregion_2_intel_me.bin ${WORKDIR}/flashregion_2_intel_me.bin
+
     echo "" > ${B}/.config
     append_cfg() {
         echo "$*" >> ${B}/.config
@@ -55,34 +61,31 @@ do_configure() {
     append_cfg "CONFIG_ANY_TOOLCHAIN=y"
     append_cfg "CONFIG_LOCALVERSION=\"${COREBOOT_LOCALVERSION}\""
 
-    # append_cfg "CONFIG_PAYLOAD_NONE=y"
-    append_cfg "CONFIG_PAYLOAD_LINUX=y"
-    append_cfg "CONFIG_PAYLOAD_FILE=\"${DEPLOY_DIR_IMAGE}/bzImage-initramfs-${MACHINE}.bin\""
-    append_cfg "CONFIG_COMPRESSED_PAYLOAD_NONE=y"
-    append_cfg "CONFIG_LINUX_COMMAND_LINE=\"console=ttyS0,115200\""
+    # Payload is added in a separate recipe
+    append_cfg "CONFIG_PAYLOAD_NONE=y"
 
     append_cfg "CONFIG_VENDOR_CWWK=y"
     append_cfg "CONFIG_BOARD_CWWK_CW_ADL_6L_V1_1=y"
 
-    # TODO: reference files relative to git repo
     # Flash Descriptor
     append_cfg "CONFIG_HAVE_IFD_BIN=y"
-    append_cfg "CONFIG_IFD_BIN_PATH=\"/home/nathan/dev/bios-replacement/cwwk-adl-6l/ifd-extract/flashregion_0_flashdescriptor.bin\""
+    append_cfg "CONFIG_IFD_BIN_PATH=\"${WORKDIR}/flashregion_0_flashdescriptor.bin\""
 
     # Management Engine
     append_cfg "CONFIG_HAVE_ME_BIN=y"
-    append_cfg "CONFIG_ME_BIN_PATH=\"/home/nathan/dev/bios-replacement/cwwk-adl-6l/ifd-extract/flashregion_2_intel_me.bin\""
+    append_cfg "CONFIG_ME_BIN_PATH=\"${WORKDIR}/flashregion_2_intel_me.bin\""
 
     # Increase CBFS to fit within BIOS segment of IFD
     append_cfg "CONFIG_CBFS_SIZE=0xa00000"
 
     # CONFIG_CBFS_VERIFICATION?
 
+    append_cfg "CONFIG_DEFAULT_CONSOLE_LOGLEVEL_5=y"
+
     # Debugging
-    append_cfg "CONFIG_DEFAULT_CONSOLE_LOGLEVEL_8=y"
-    append_cfg "CONFIG_DISPLAY_FSP_CALLS_AND_STATUS=y"
-    append_cfg "CONFIG_DISPLAY_FSP_HEADER=y"
-    append_cfg "CONFIG_DEBUG_CBFS=y"
+    # append_cfg "CONFIG_DEFAULT_CONSOLE_LOGLEVEL_8=y"
+    # append_cfg "CONFIG_DISPLAY_FSP_CALLS_AND_STATUS=y"
+    # append_cfg "CONFIG_DISPLAY_FSP_HEADER=y"
 
     oe_runmake olddefconfig
 }
