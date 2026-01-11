@@ -131,6 +131,7 @@ python do_generate_config:append:simpleboot () {
     config("SHMEM", "y")
     config("RELAY", "y")
     config("KCMP", "y")
+    config("DEVMEM", "y")
 
     config("BLK_DEV_INITRD", "y")
     config("SMP", "y")
@@ -312,7 +313,6 @@ python do_generate_config:append:x86-64 () {
     config("SERIAL_8250_EXTENDED", "y")
     config("SERIAL_8250_MANY_PORTS", "y")
     config("SERIAL_8250_SHARE_IRQ", "y")
-    config("SERIAL_8250_DETECT_IRQ", "y")
     config("SERIAL_8250_RSA", "y")
     config("SERIAL_8250_PNP", "y")
     config("SERIAL_8250_PCI", "y")
