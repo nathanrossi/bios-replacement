@@ -1,0 +1,15 @@
+
+Header is not 2.54mm pitch
+Header is RS232 voltage levels
+Has a WS213EA RS232 Transceiver
+
+[Inductors/Capacitors]
+
+    - 1  2 - RXI
+TXO - 3  4 -
+GND - 5  6 -
+    - 7  8 -
+    - 9 10 -
+
+[Buzzer]
+

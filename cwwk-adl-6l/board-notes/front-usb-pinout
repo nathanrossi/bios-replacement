@@ -1,0 +1,13 @@
+
+
+Header is not 2.54mm pitch
+
+[Edge of board]
+
+4 - GND
+3 - D+ (green)
+2 - D- (white)
+1 - VCC
+
+[USB SS A connector]
+
