@@ -1,0 +1,30 @@
+superiotool r25.12-55-g35a13f30a3
+Found ITE IT8613E (id=0x8613, rev=0xc) at 0x2e
+Register dump:
+idx 20 21 22 23 24 2b
+val 86 13 0c 40 00 48
+def 86 13 05 40 00 48
+LDN 0x01 (COM1)
+idx 30 60 61 70 f0
+val 01 03 f8 04 01
+def 00 03 f8 04 00
+LDN 0x04 (Environment controller)
+idx 30 60 61 62 63 70 f0 f1  f2 f3 f4 f5 f6 fa fb fc
+val 01 0a 30 0a 20 00 80 00  00 00 60 00 f0 10 00 00
+def 00 02 90 02 30 09 00 00  00 00 00 NA NA 00 00 00
+LDN 0x05 (Keyboard)
+idx 30 60 61 62 63 70 71 f0
+val 00 00 60 00 64 01 02 48
+def 01 00 60 00 64 01 02 48
+LDN 0x06 (Mouse)
+idx 30 70 71 f0
+val 00 0c 02 00
+def 00 0c 02 00
+LDN 0x07 (GPIO)
+idx 25 26 27 28 29 2a 2c 2d  60 61 62 63 70 71 72 73  74 b0 b1 b2 b3 b4 b8 ba  bb bc bd c0 c1 c2 c3 c4  c8 c9 ca cb cc cd da db  e0 e1 e2 e3 e4 ec f0 f1  f2 f3 f4 f5 f6 f7 f8 f9  fa fb
+val 09 f7 00 01 c1 00 41 03  0a 10 0a 00 00 09 20 38  00 00 00 00 00 00 00 00  00 c0 03 09 06 00 40 c0  09 06 00 00 c0 03 b0 44  00 00 00 00 00 00 00 00  00 00 00 00 0e 00 00 00  00 00
+def 00 f3 00 00 00 01 01 00  00 00 00 00 00 00 20 38  00 00 00 00 00 00 00 00  00 00 00 01 00 00 40 00  01 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  NA NA 00 00 0e 00 00 00  00 00
+LDN 0x0a (Consumer IR)
+idx 30 60 61 70 f0
+val 00 03 10 0b 06
+def 00 03 10 0b 06

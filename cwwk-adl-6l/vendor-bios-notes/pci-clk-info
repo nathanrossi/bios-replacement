@@ -1,0 +1,29 @@
+
+759604 - section 35
+SRCCLKREQ
+
+ICC is behind pcr port 0xad (similar to jasper lake)
+
+# from coreboot
+root@testbox:~# devmem2 0xfdad22e4 w
+/dev/mem opened.
+Memory mapped at address 0x7f4ea0a28000.
+Read at address  0xFDAD22E4 (0x7f4ea0a282e4): 0x06543210
+
+# from bios
+root@testbox:~# devmem2 0xfdad22e4 w
+/dev/mem opened.
+Memory mapped at address 0x7fb52a2b3000.
+Read at address  0xFDAD22E4 (0x7fb52a2b32e4): 0x06543210
+
+
+0 -> PCIE0 -> REQ0
+1 -> PCIE1 -> REQ1
+2 -> PCIE2 -> REQ2
+3 -> PCIE3 -> REQ3
+4 -> PCIE4 -> REQ4
+5 -> PCIE5 -> REQ5
+6 -> PCIE6 -> REQ6
+
+RP? -> PCIE? CLK
+

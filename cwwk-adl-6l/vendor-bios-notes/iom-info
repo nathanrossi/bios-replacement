@@ -1,0 +1,108 @@
+
+REGBASE = 0xfb000000
+PID 0xc1
+
+pullup offset 0x1070
+*4 per
+0xfbc11070
+
+devmem2 0xfbc11070 w
+devmem2 0xfbc11074 w
+devmem2 0xfbc11078 w
+devmem2 0xfbc1107c w
+
+pulldown offset 0x1088
+0xfbc11088
+*4 per
+
+devmem2 0xfbc11088 w
+devmem2 0xfbc1108c w
+devmem2 0xfbc11090 w
+devmem2 0xfbc11094 w
+
+IOM status
+devmem2 0xfbc10010 w
+devmem2 0xfbc10160 w
+devmem2 0xfbc10164 w
+devmem2 0xfbc10168 w
+devmem2 0xfbc1016c w
+devmem2 0xfbc10098 w
+devmem2 0xfbc1102c w
+devmem2 0xfbc118f8 w
+devmem2 0xfbc118fc w
+
+
+
+
+## vendor bios
+
+no pad config?
+Read at address  0xFBC11070 (0x7ff9753b4070): 0x00000000
+Read at address  0xFBC11074 (0x7f4fd4676074): 0x00000000
+Read at address  0xFBC11078 (0x7f5ada76a078): 0x00000000
+Read at address  0xFBC1107C (0x7f696900207c): 0x00000000
+Read at address  0xFBC11088 (0x7fde4ba0e088): 0x00000000
+Read at address  0xFBC1108C (0x7f690735408c): 0x00000000
+Read at address  0xFBC11090 (0x7ff781f73090): 0x00000000
+Read at address  0xFBC11094 (0x7f08b72e2094): 0x00000000
+
+all 0x0
+
+nothing attached:
+Read at address  0xFBC10010 (0x7f891fe00010): 0xC0000FA7
+Read at address  0xFBC10160 (0x7f90f5e0f160): 0x00000029
+Read at address  0xFBC10164 (0x7ff959463164): 0x800000E9
+Read at address  0xFBC10168 (0x7f6816593168): 0x00000000
+Read at address  0xFBC1016C (0x7fa7d980716c): 0x00000000
+Read at address  0xFBC10098 (0x7fc855f56098): 0x80000000
+Read at address  0xFBC1102C (0x7f335cbfe02c): 0x00000000
+Read at address  0xFBC118F8 (0x7f8a47b9c8f8): 0x00000000
+Read at address  0xFBC118FC (0x7fcd5b5ec8fc): 0x030000F0
+
+with usb-c dp/usb2.0 alt mode:
+Read at address  0xFBC10010 (0x7f3068c2b010): 0xC0000FA7
+Read at address  0xFBC10160 (0x7ff8389ac160): 0x80301169
+Read at address  0xFBC10164 (0x7f703d1c9164): 0x800000E9
+Read at address  0xFBC10168 (0x7ffb79fc7168): 0x00000000
+Read at address  0xFBC1016C (0x7fd95d8cc16c): 0x00000000
+Read at address  0xFBC10098 (0x7fda4da63098): 0x80000000
+Read at address  0xFBC1102C (0x7fdb6830e02c): 0x00000002
+Read at address  0xFBC118F8 (0x7fbbc910a8f8): 0x00000000
+Read at address  0xFBC118FC (0x7fcf61e608fc): 0x030000F0
+
+usb-3.0 port does not change state
+
+with usb-c 3.0 device:
+Read at address  0xFBC10010 (0x7ffaa9c0d010): 0xC0000FA7
+Read at address  0xFBC10160 (0x7f62dc716160): 0x800000E9
+Read at address  0xFBC10164 (0x7fcefa30b164): 0x800000E9
+Read at address  0xFBC10168 (0x7fadb21d4168): 0x00000000
+Read at address  0xFBC1016C (0x7f6599c5216c): 0x00000000
+Read at address  0xFBC10098 (0x7f26f9548098): 0x80000000
+Read at address  0xFBC1102C (0x7f0f9c57b02c): 0x00000000
+Read at address  0xFBC118F8 (0x7ff5429048f8): 0x00000000
+Read at address  0xFBC118FC (0x7ff8a2a228fc): 0x030000F0
+
+
+
+## with coreboot
+
+root@testbox:~# devmem2 0xfbc11070 w
+/dev/mem opened.
+Memory mapped at address 0x7f64dbcce000.
+Read at address  0xFBC11070 (0x7f64dbcce070): 0x00000000
+root@testbox:~# devmem2 0xfbc11088 w
+/dev/mem opened.
+Memory mapped at address 0x7f3cfbde0000.
+Read at address  0xFBC11088 (0x7f3cfbde0088): 0x00000000
+
+Read at address  0xFBC10010 (0x7f7584e69010): 0x00000000
+Read at address  0xFBC10160 (0x7fa651909160): 0x0000000B
+Read at address  0xFBC10164 (0x7f0911af3164): 0x0000000B
+Read at address  0xFBC10168 (0x7f867b848168): 0x00000000
+Read at address  0xFBC1016C (0x7f1be416616c): 0x00000000
+Read at address  0xFBC10098 (0x7fbfc458a098): 0x00000000
+Read at address  0xFBC1102C (0x7f27a3aa402c): 0x00000000
+Read at address  0xFBC118F8 (0x7f98ddd1f8f8): 0x00000000
+Read at address  0xFBC118FC (0x7efc2ef4e8fc): 0x00000000
+

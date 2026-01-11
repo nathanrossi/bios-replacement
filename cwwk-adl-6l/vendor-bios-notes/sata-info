@@ -1,0 +1,26 @@
+
+[    0.831082] ata2: SATA link up 6.0 Gbps (SStatus 133 SControl 300)
+[    0.831806] ata2.00: ATA-10: WDC WDS240G2G0B-00EPW0, UJ400400, max UDMA/133
+[    0.831810] ata2.00: 468862128 sectors, multi 1: LBA48 NCQ (depth 32)
+[    0.832918] ata2.00: Features: Dev-Sleep
+[    0.839576] ata2.00: configured for UDMA/133
+[    0.849821] ahci 0000:00:17.0: port does not support device sleep
+[    0.850456] scsi 1:0:0:0: Direct-Access     ATA      WDC WDS240G2G0B- 0400 PQ: 0 ANSI: 5
+[    0.850644] sd 1:0:0:0: [sda] 468862128 512-byte logical blocks: (240 GB/224 GiB)
+[    0.850652] sd 1:0:0:0: [sda] Write Protect is off
+[    0.850655] sd 1:0:0:0: [sda] Mode Sense: 00 3a 00 00
+[    0.850662] sd 1:0:0:0: [sda] Write cache: enabled, read cache: enabled, doesn't support DPO or FUA
+
+root@testbox:~# lsscsi --hosts
+[0]    ahci          
+[1]    ahci          
+[2]    usb-storage   
+[N:0]  /dev/nvme0  INTEL MEMPEK1J016GAL              PHBT851203BT016N    K4110420
+[N:1]  /dev/nvme1  INTEL MEMPEK1J016GAL              PHBT851204JD016N    K4110420
+
+root@testbox:/sys/bus/pci/devices/0000:00:17.0# lsscsi
+[1:0:0:0]    disk    ATA      WDC WDS240G2G0B- 0400  /dev/sda 
+[2:0:0:0]    disk    SanDisk  Cruzer Blade     1.00  /dev/sdb 
+[N:0:0:1]    disk    INTEL MEMPEK1J016GAL__1                    /dev/nvme0n1
+[N:1:0:1]    disk    INTEL MEMPEK1J016GAL__1                    /dev/nvme1n1
+

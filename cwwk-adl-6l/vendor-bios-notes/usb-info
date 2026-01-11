@@ -1,0 +1,99 @@
+
+root@testbox:/sys/bus/usb/devices# realpath usb*
+/sys/devices/pci0000:00/0000:00:0d.0/usb1
+/sys/devices/pci0000:00/0000:00:0d.0/usb2 - 00:0d -> tcss-xhci
+/sys/devices/pci0000:00/0000:00:14.0/usb3 - 00:14 -> xhci
+/sys/devices/pci0000:00/0000:00:14.0/usb4
+
+
+root@testbox:~# lsusb -t
+/:  Bus 001.Port 001: Dev 001, Class=root_hub, Driver=xhci_hcd/1p, 480M
+/:  Bus 002.Port 001: Dev 001, Class=root_hub, Driver=xhci_hcd/2p, 20000M/x2
+/:  Bus 003.Port 001: Dev 001, Class=root_hub, Driver=xhci_hcd/12p, 480M
+    |__ Port 007: Dev 002, If 0, Class=Mass Storage, Driver=usb-storage, 480M
+/:  Bus 004.Port 001: Dev 001, Class=root_hub, Driver=xhci_hcd/4p, 10000M
+root@testbox:~# lsusb -t
+/:  Bus 001.Port 001: Dev 001, Class=root_hub, Driver=xhci_hcd/1p, 480M
+/:  Bus 002.Port 001: Dev 001, Class=root_hub, Driver=xhci_hcd/2p, 20000M/x2
+/:  Bus 003.Port 001: Dev 001, Class=root_hub, Driver=xhci_hcd/12p, 480M
+    |__ Port 003: Dev 003, If 0, Class=Mass Storage, Driver=usb-storage, 480M
+/:  Bus 004.Port 001: Dev 001, Class=root_hub, Driver=xhci_hcd/4p, 10000M
+root@testbox:~# lsusb -t
+/:  Bus 001.Port 001: Dev 001, Class=root_hub, Driver=xhci_hcd/1p, 480M
+/:  Bus 002.Port 001: Dev 001, Class=root_hub, Driver=xhci_hcd/2p, 20000M/x2
+/:  Bus 003.Port 001: Dev 001, Class=root_hub, Driver=xhci_hcd/12p, 480M
+    |__ Port 004: Dev 004, If 0, Class=Mass Storage, Driver=usb-storage, 480M
+/:  Bus 004.Port 001: Dev 001, Class=root_hub, Driver=xhci_hcd/4p, 10000M
+root@testbox:~# lsusb -t
+/:  Bus 001.Port 001: Dev 001, Class=root_hub, Driver=xhci_hcd/1p, 480M
+/:  Bus 002.Port 001: Dev 001, Class=root_hub, Driver=xhci_hcd/2p, 20000M/x2
+/:  Bus 003.Port 001: Dev 001, Class=root_hub, Driver=xhci_hcd/12p, 480M
+    |__ Port 008: Dev 005, If 0, Class=Mass Storage, Driver=usb-storage, 480M
+/:  Bus 004.Port 001: Dev 001, Class=root_hub, Driver=xhci_hcd/4p, 10000M
+root@testbox:~# lsusb -t
+/:  Bus 001.Port 001: Dev 001, Class=root_hub, Driver=xhci_hcd/1p, 480M
+/:  Bus 002.Port 001: Dev 001, Class=root_hub, Driver=xhci_hcd/2p, 20000M/x2
+/:  Bus 003.Port 001: Dev 001, Class=root_hub, Driver=xhci_hcd/12p, 480M
+    |__ Port 005: Dev 006, If 0, Class=Mass Storage, Driver=usb-storage, 480M
+/:  Bus 004.Port 001: Dev 001, Class=root_hub, Driver=xhci_hcd/4p, 10000M
+root@testbox:~# lsusb -t
+/:  Bus 001.Port 001: Dev 001, Class=root_hub, Driver=xhci_hcd/1p, 480M
+/:  Bus 002.Port 001: Dev 001, Class=root_hub, Driver=xhci_hcd/2p, 20000M/x2
+/:  Bus 003.Port 001: Dev 001, Class=root_hub, Driver=xhci_hcd/12p, 480M
+    |__ Port 001: Dev 007, If 0, Class=Mass Storage, Driver=usb-storage, 480M
+/:  Bus 004.Port 001: Dev 001, Class=root_hub, Driver=xhci_hcd/4p, 10000M
+
+root@testbox:~# lsusb -t
+/:  Bus 001.Port 001: Dev 001, Class=root_hub, Driver=xhci_hcd/1p, 480M
+/:  Bus 002.Port 001: Dev 001, Class=root_hub, Driver=xhci_hcd/2p, 20000M/x2
+/:  Bus 003.Port 001: Dev 001, Class=root_hub, Driver=xhci_hcd/12p, 480M
+    |__ Port 006: Dev 008, If 0, Class=Mass Storage, Driver=usb-storage, 480M
+/:  Bus 004.Port 001: Dev 001, Class=root_hub, Driver=xhci_hcd/4p, 10000M
+root@testbox:~# lsusb
+Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+Bus 002 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub
+Bus 003 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+Bus 003 Device 008: ID 05e3:0751 Genesys Logic, Inc. microSD Card Reader
+Bus 004 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub
+
+
+root@testbox:~# lsusb
+Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+Bus 002 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub
+Bus 002 Device 002: ID 0781:5580 SanDisk Corp. SDCZ80 Flash Drive
+Bus 003 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+Bus 003 Device 008: ID 05e3:0751 Genesys Logic, Inc. microSD Card Reader
+Bus 004 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub
+root@testbox:~# lsusb -t
+/:  Bus 001.Port 001: Dev 001, Class=root_hub, Driver=xhci_hcd/1p, 480M
+/:  Bus 002.Port 001: Dev 001, Class=root_hub, Driver=xhci_hcd/2p, 20000M/x2
+    |__ Port 002: Dev 002, If 0, Class=Mass Storage, Driver=usb-storage, 5000M
+/:  Bus 003.Port 001: Dev 001, Class=root_hub, Driver=xhci_hcd/12p, 480M
+    |__ Port 006: Dev 008, If 0, Class=Mass Storage, Driver=usb-storage, 480M
+/:  Bus 004.Port 001: Dev 001, Class=root_hub, Driver=xhci_hcd/4p, 10000M
+
+
+root@testbox:~# lsusb
+Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+Bus 002 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub
+Bus 002 Device 003: ID 0951:16ae Kingston Technology DT microDuo 3C
+Bus 003 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+Bus 003 Device 008: ID 05e3:0751 Genesys Logic, Inc. microSD Card Reader
+Bus 004 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub
+root@testbox:~# lsusb -t
+/:  Bus 001.Port 001: Dev 001, Class=root_hub, Driver=xhci_hcd/1p, 480M
+/:  Bus 002.Port 001: Dev 001, Class=root_hub, Driver=xhci_hcd/2p, 20000M/x2
+    |__ Port 001: Dev 003, If 0, Class=Mass Storage, Driver=usb-storage, 5000M
+/:  Bus 003.Port 001: Dev 001, Class=root_hub, Driver=xhci_hcd/12p, 480M
+    |__ Port 006: Dev 008, If 0, Class=Mass Storage, Driver=usb-storage, 480M
+/:  Bus 004.Port 001: Dev 001, Class=root_hub, Driver=xhci_hcd/4p, 10000M
+
+
+internal USB
+
+root@testbox:~# lsusb -t
+/:  Bus 001.Port 001: Dev 001, Class=root_hub, Driver=xhci_hcd/1p, 480M
+/:  Bus 002.Port 001: Dev 001, Class=root_hub, Driver=xhci_hcd/2p, 20000M/x2
+/:  Bus 003.Port 001: Dev 001, Class=root_hub, Driver=xhci_hcd/12p, 480M
+    |__ Port 002: Dev 005, If 0, Class=Mass Storage, Driver=usb-storage, 480M
+/:  Bus 004.Port 001: Dev 001, Class=root_hub, Driver=xhci_hcd/4p, 10000M
