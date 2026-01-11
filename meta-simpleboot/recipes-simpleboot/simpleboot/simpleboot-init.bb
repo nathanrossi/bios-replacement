@@ -6,6 +6,7 @@ inherit allarch
 
 SRC_URI = " \
     file://init \
+    file://boot-disk \
     "
 
 S = "${UNPACKDIR}"
@@ -20,6 +21,8 @@ do_install() {
     install -d ${D}${sbindir}
     install -m 0755 ${S}/init ${D}${sbindir}/init
     # ln -sf ${sbindir}/init ${D}/init
+
+    install -D -m 0755 ${S}/boot-disk ${D}${bindir}/boot-disk
 }
 
 FILES:${PN} += "/init /dev"

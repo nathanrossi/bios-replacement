@@ -1,0 +1,17 @@
+#!/bin/sh
+DISK=$1
+DISKNAME=$(basename $DISK)
+
+echo "Booting from $DISKNAME"
+
+mkdir -p /run/mount/$DISKNAME
+
+echo "Mounting at /run/mount/$DISKNAME"
+mount $DISK /run/mount/$DISKNAME -o ro
+
+echo "Loading images"
+cd /run/mount/$DISKNAME/EFI/BOOT/
+kexec -l bzImage --initrd=core-image-minimal-genericx86-64.cpio.zst --command-line="console=ttyS0,115200 spi_intel.writeable=1"
+
+echo "Executing kernel"
+kexec -e
