@@ -18,9 +18,9 @@ COMPATIBLE_MACHINE = "^$"
 
 S = "${UNPACKDIR}/${BPN}-${PV}"
 
-SRCREV = "78d82960b939df64cf7d26ca5ed34eb87f44c9e5"
-PV = "6.18.2+git${SRCPV}"
-SRC_URI = "git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git;protocol=https;branch=linux-6.18.y"
+SRCREV = "5fce161649b4d779d1b76d9fcd52dc77779774b8"
+PV = "7.2.9+git${SRCPV}"
+SRC_URI = "git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git;protocol=https;branch=linux-7.2.y"
 
 python do_generate_config() {
     def config(name, val):
@@ -55,20 +55,21 @@ python do_generate_config() {
 }
 addtask generate_config before do_configure after do_unpack do_patch
 
-do_merge_config() {
-    cd ${S}
-    env \
-        CFLAGS="${CFLAGS} ${TOOLCHAIN_OPTIONS}" \
-        HOSTCC="${BUILD_CC} ${BUILD_CFLAGS} ${BUILD_LDFLAGS}" \
-        HOSTCPP="${BUILD_CPP}" \
-        CC="${KERNEL_CC}" \
-        LD="${KERNEL_LD}" \
-        OBJCOPY="${KERNEL_OBJCOPY}" \
-        STRIP="${KERNEL_STRIP}" \
-        ARCH=${ARCH} \
-        ${S}/scripts/kconfig/merge_config.sh -O ${B} -n ${B}/.config.request
+do_configure:prepend() {
+    (
+        cd ${S}
+        env \
+            CFLAGS="${CFLAGS} ${TOOLCHAIN_OPTIONS}" \
+            HOSTCC="${BUILD_CC} ${BUILD_CFLAGS} ${BUILD_LDFLAGS}" \
+            HOSTCPP="${BUILD_CPP}" \
+            CC="${KERNEL_CC}" \
+            LD="${KERNEL_LD}" \
+            OBJCOPY="${KERNEL_OBJCOPY}" \
+            STRIP="${KERNEL_STRIP}" \
+            ARCH=${ARCH} \
+            ${S}/scripts/kconfig/merge_config.sh -O ${B} -n ${B}/.config.request
+    )
 }
-addtask merge_config before do_configure after generate_config
 
 python do_check_config() {
     def load_configs(path):
@@ -122,7 +123,7 @@ python do_generate_config:append:simpleboot () {
     config("POSIX_TIMERS", "y")
     config("HIGH_RES_TIMERS", "y")
     # config("PREEMPT", "y")
-    config("PREEMPT_VOLUNTARY", "y")
+    config("PREEMPT_LAZY", "y")
     config("FUTEX", "y")
     config("TIMERFD", "y")
     config("EVENTFD", "y")
@@ -309,9 +310,9 @@ python do_generate_config:append:x86-64 () {
 
     config("SERIAL_8250", "y")
     config("SERIAL_8250_CONSOLE", "y")
-    config("SERIAL_8250_NR_UARTS", "32")
+    config("SERIAL_8250_RUNTIME_UARTS", "16")
+    config("SERIAL_8250_NR_UARTS", "16")
     config("SERIAL_8250_EXTENDED", "y")
-    config("SERIAL_8250_MANY_PORTS", "y")
     config("SERIAL_8250_SHARE_IRQ", "y")
     config("SERIAL_8250_RSA", "y")
     config("SERIAL_8250_PNP", "y")
@@ -347,11 +348,3 @@ python do_generate_config:append:x86-64 () {
 
     config("RTC_DRV_CMOS", "y")
 }
-
-#do_compile:append() {
-#    # Fix up generated filenames in specific files
-#    if [ -e ${B}/arch/${ARCH}/include/generated/asm/mach-types.h ]; then
-#        sed -i 's#${STAGING_KERNEL_DIR}#${TARGET_DBGSRC_DIR}#' \
-#            ${B}/arch/${ARCH}/include/generated/asm/mach-types.h
-#    fi
-#}
