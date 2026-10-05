@@ -4,8 +4,8 @@ LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://COPYING;md5=751419260aa954499f7abaabaa882bbe"
 
 SRC_URI = "gitsm://github.com/coreboot/coreboot.git;protocol=https;name=coreboot;branch=main"
-SRCREV_coreboot = "7edcb87323097f0e6ddd86af9e33a9726261b943"
-PV = "25.12+git+${SRCPV}"
+SRCREV_coreboot = "8b0e34f90e08547cf19e550a43ed72f69c39d6ed"
+PV = "26.09+git+${SRCPV}"
 
 S = "${WORKDIR}/git"
 B = "${WORKDIR}/coreboot-${MACHINE}"
@@ -78,7 +78,11 @@ do_configure() {
     # Increase CBFS to fit within BIOS segment of IFD
     append_cfg "CONFIG_CBFS_SIZE=0xa00000"
 
-    # CONFIG_CBFS_VERIFICATION?
+    # Enable TPM2 support via Intel fTPM/CSME
+    append_cfg "CONFIG_TPM2=y"
+
+    # Enable CBFS component hash integrity checking
+    append_cfg "CONFIG_CBFS_VERIFICATION=y"
 
     append_cfg "CONFIG_DEFAULT_CONSOLE_LOGLEVEL_5=y"
 
