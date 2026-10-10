@@ -64,7 +64,7 @@ if __name__ == "__main__":
 
 	print("== PCH")
 	for i in range(28):
-		print("PcieRpEnableCpm[{}] = {}".format(i, fsp_s[0x048f + i]))
+		print("PcieRpEnableCpm[{}] = {}".format(i, fsp_s[0x04bf + i]))
 	for i in range(28):
 		print("PcieRpSlotImplemented[{}] = {}".format(i, fsp_s[0x0487 + i]))
 	# for i in range(28):
@@ -78,17 +78,20 @@ if __name__ == "__main__":
 	for i in range(28):
 		print("PcieRpPcieSpeed[{}] = {}".format(i, fsp_s[0x08d9 + i]))
 	for i in range(28):
-		# ASPM_DEFAULT,
-		# ASPM_DISABLE,
-		# ASPM_L0S,
-		# ASPM_L1,
-		# ASPM_L0S_L1,
-		# ASPM_AUTO,
+		# ASPM_DEFAULT = 0
+		# ASPM_DISABLE = 1
+		# ASPM_L0S = 2
+		# ASPM_L1 = 3
+		# ASPM_L0S_L1 = 4
+		# ASPM_AUTO = 5
 		print("PcieRpAspm[{}] = {}".format(i, fsp_s[0x092d + i]))
 	for i in range(28):
 		print("PcieRpL1Substates[{}] = {}".format(i, fsp_s[0x0949 + i]))
 	for i in range(28):
 		print("PcieRpLtrEnable[{}] = {}".format(i, fsp_s[0x0981 + i]))
+
+	print("PchPcieClockGating = {}".format(fsp_s[0x9dd]))
+	print("PchPciePowerGating = {}".format(fsp_s[0xa81]))
 
 	print("== CPU")
 	for i in range(4):
@@ -141,7 +144,7 @@ if __name__ == "__main__":
 	for i in range(18):
 		print("PcieClkSrcUsage[{}] = {}".format(i, fsp_m[0x0749 + i]))
 		# print("PcieClkSrcUsageRsvd[{}] = {}".format(i, fsp_m[0x075b + i]))
-		print("PcieClkSrcReq[{}] = {}".format(i, fsp_m[0x769 + i]))
+		print("PcieClkSrcClkReq[{}] = {}".format(i, fsp_m[0x769 + i]))
 		# print("PcieClkSrcReqRsvd[{}] = {}".format(i, fsp_m[0x77b + i]))
 
 	mask = struct.unpack("<I", fsp_m[0x7d8:][0:4])[0]
